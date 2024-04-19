@@ -27,23 +27,42 @@ class Canvas {
             1
         );
     }
+    
+    toViewport(viewport, canvasX, canvasY) {
+        return [
+            canvasX * viewport.width / this.width,
+            canvasY * viewport.height/ this.height,
+            viewport.pos.z
+        ] 
+    } 
 }
 
 function render() {
     let canvas = new Canvas('canvas');
 
     let camera = {
-        x: 0,
-        y: 0,
-        z: 0
+        pos: {
+            X: 0,
+            y: 0,
+            z: 0
+        }
     };
 
     let viewport = {
+        // perpendicular to Z axis
         width: 1,
         height: 1,
-        distanceFromCamera: 1
-        // also perpendicular to Z axis
+        pos: {
+            z: 1
+        }
     };
+
+    for(let canvasX = canvas.minX; canvasX <= canvas.maxX; canvasX++) {
+        for(let canvasY = canvas.minY; canvasY <= canvas.maxY; canvasY++) {
+            let viewportPos = canvas.toViewport(viewport, canvasX, canvasY); 
+            console.log(`${canvasX}, ${canvasY} | ${viewportPos}`);
+        }
+    }
 }
 
 render();
