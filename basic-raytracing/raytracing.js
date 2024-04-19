@@ -31,17 +31,19 @@ class Canvas {
 
 function render() {
     let canvas = new Canvas('canvas');
-    for(let x = canvas.minX; x <= canvas.maxX; x++) {
-        for(let y = canvas.minY; y <= canvas.maxY; y++) {
-            // quadrants
-            if(x == 0 || y == 0) 
-                canvas.putPixel(x, y, rgb(0, 0, 0));
 
-            // square in positive quadrant
-            if(0 < x && x < canvas.width/7 && 0 < y && y < canvas.height/7)
-                canvas.putPixel(x, y, rgb(255, 0, 0));
-        }
-    }
+    let camera = {
+        x: 0,
+        y: 0,
+        z: 0
+    };
+
+    let viewport = {
+        width: 1,
+        height: 1,
+        distanceFromCamera: 1
+        // also perpendicular to Z axis
+    };
 }
 
 render();
