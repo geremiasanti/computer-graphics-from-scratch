@@ -1,7 +1,7 @@
 class Canvas {
     constructor(canvasElementId) {
         this.htmlElement = document.getElementById(canvasElementId);
-        this.context = this.htmlElement.getContext('2d');
+        this.context = this.htmlElement.getContext("2d");
 
         this.width = this.htmlElement.width;
         this.height = this.htmlElement.height;
@@ -80,15 +80,20 @@ function traceRay(cameraPos, cameraToViewportVector, minT, maxT, spheres) {
     });
 
     if(closestSphere == null) 
-    // background
-    return rgb(255, 255, 255);
+        return rgb(255, 255, 255); // background
 
     return closestSphere.color;
 }
 
+function getElementValueById(id) {
+    let value = document.getElementById(id).value;
+    let valueInt = parseFloat(value);
+    return valueInt;
+}
+
 function render() {
     // canvas
-    let canvas = new Canvas('canvas');
+    let canvas = new Canvas("canvas");
 
     // scene
     let camera = {
@@ -111,31 +116,30 @@ function render() {
     let spheres = [
         {
             center: {
-                x: 0,
-                y: -1,
-                z: 3
+                x: getElementValueById("red-sphere-x"),
+                y: getElementValueById("red-sphere-y"),
+                z: getElementValueById("red-sphere-z"),
             },
-            radius: 1,
+            radius: getElementValueById("red-sphere-radius"),
             color: rgb(255, 0, 0) // red
         }, {
             center: {
-                x: 2,
-                y: 0,
-                z: 4
+                x: getElementValueById("green-sphere-x"),
+                y: getElementValueById("green-sphere-y"),
+                z: getElementValueById("green-sphere-z"),
             },
-            radius: 1,
-            color: rgb(0, 0, 255) // blue
+            radius: getElementValueById("green-sphere-radius"),
+            color: rgb(0, 255, 0) // green
         }, {
             center: {
-                x: -1,
-                y: 0,
-                z: 4
+                x: getElementValueById("blue-sphere-x"),
+                y: getElementValueById("blue-sphere-y"),
+                z: getElementValueById("blue-sphere-z"),
             },
-            radius: 1,
-            color: rgb(0, 255, 0) // green
+            radius: getElementValueById("blue-sphere-radius"),
+            color: rgb(0, 0, 255) // blue
         }
     ];
-;
 
     // rendering
     for(let canvasX = canvas.minX; canvasX <= canvas.maxX; canvasX++) {
@@ -153,4 +157,20 @@ function render() {
     }
 }
 
-render();
+function initInputs() {
+    let inputs = document.getElementsByClassName("render-on-change");
+    for(let i = 0; i < inputs.length; i++) {
+        inputs[i].addEventListener("change", (event) => {
+            render()
+        });; 
+    }
+}
+
+function main() {
+    document.addEventListener("DOMContentLoaded", function() {
+        render();
+        initInputs();    
+    });
+}
+ 
+main();
