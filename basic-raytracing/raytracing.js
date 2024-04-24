@@ -1,10 +1,12 @@
 class Canvas {
-    constructor(canvasElementId) {
+    constructor(canvasElementId, width, height) {
         this.htmlElement = document.getElementById(canvasElementId);
         this.context = this.htmlElement.getContext("2d");
 
-        this.width = this.htmlElement.width;
-        this.height = this.htmlElement.height;
+        this.width = width; 
+        this.height = height;
+        this.htmlElement.width = this.width; 
+        this.htmlElement.height = this.height;
         this.minX = -this.width/2;
         this.maxX = this.width/2;
         this.minY = -this.height/2;
@@ -26,9 +28,9 @@ class Canvas {
     
     toViewport(viewport, camera, canvasX, canvasY) {
         return [
-            (canvasX * viewport.width / this.width) - camera.pos.x,
-            (canvasY * viewport.height / this.height) - camera.pos.y,
-            viewport.center.z - camera.pos.z
+            (canvasX * viewport.width / this.width) + camera.pos.x,
+            (canvasY * viewport.height / this.height) + camera.pos.y,
+            viewport.center.z + camera.pos.z
         ];
     } 
 }
@@ -93,24 +95,28 @@ function getElementValueById(id) {
 
 function render() {
     // canvas
-    let canvas = new Canvas("canvas");
+    let canvas = new Canvas(
+        "canvas",
+        getElementValueById("canvas-width"),
+        getElementValueById("canvas-height"),
+    );
 
     // scene
     let camera = {
         pos: {
-            x: 0,
-            y: 0,
-            z: 0
+            x: getElementValueById("camera-x"),
+            y: getElementValueById("camera-y"),
+            z: getElementValueById("camera-z"),
         }
     };
     let viewport = {
         // perpendicular to Z axis
-        width: 1,
-        height: 1,
+        width: getElementValueById("viewport-width"),
+        height: getElementValueById("viewport-height"),
         center: {
             x: 0,
             y: 0,
-            z: 1
+            z: getElementValueById("viewport-z"),
         }
     };
     let spheres = [
@@ -149,7 +155,7 @@ function render() {
                 camera.pos, 
                 cameraToViewportVector, 
                 viewport.center.z,
-                1000,
+                Number.MAX_SAFE_INTEGER,
                 spheres
             );
             canvas.putPixel(canvasX, canvasY, color);

@@ -17,9 +17,52 @@
 	</div>
 	<div>
 	    <div class="col">
-		<canvas id="canvas" width="500" height="500" style="border:1px solid black;">
+		<canvas id="canvas" style="border:1px solid black;">
 		    Your browser does not support the HTML canvas tag.
 		</canvas>
+	    </div>
+	    <div class="col">
+		<h3>Camera</h3>
+		<ul>
+		    <li>
+			<label for="camera-x">x:</label>
+			<input type="number" step=".1" class="render-on-change" id="camera-x" value="0">
+		    </li>
+		    <li>
+			<label for="camera-y">y:</label>
+			<input type="number" step=".1" class="render-on-change" id="camera-y" value="0">
+		    </li>
+		    <li>
+			<label for="camera-z">z:</label>
+			<input type="number" step=".1" class="render-on-change" id="camera-z" value="0">
+		    </li>
+		</ul>
+		<h3>Viewport (Projection plane)</h3>
+		<ul>
+		    <li>
+			<label for="viewport-width">width:</label>
+			<input type="number" step=".1" class="render-on-change" id="viewport-width" value="1">
+		    </li>
+		    <li>
+			<label for="viewport-height">height:</label>
+			<input type="number" step=".1" class="render-on-change" id="viewport-height" value="1">
+		    </li>
+		    <li>
+			<label for="viewport-z">z:</label>
+			<input type="number" step=".1" class="render-on-change" id="viewport-z" value="1">
+		    </li>
+		</ul>
+		<h3>Canvas</h3>
+		<ul>
+		    <li>
+			<label for="canvas-width">width:</label>
+			<input type="number" step="1" class="render-on-change" id="canvas-width" value="500">
+		    </li>
+		    <li>
+			<label for="canvas-height">height:</label>
+			<input type="number" step="1" class="render-on-change" id="canvas-height" value="500">
+		    </li>
+		</ul>
 	    </div>
 	    <div class="col">
 		<h3>Red sphere</h3>
